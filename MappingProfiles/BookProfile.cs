@@ -12,7 +12,6 @@ namespace LibraryApp.MappingProfiles
                                       .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => $"{src.AuthorLastName}, {src.AuthorFirstName}"))
                                       .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                                       .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
-
         }
     }
 }

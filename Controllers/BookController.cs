@@ -3,6 +3,7 @@ using LibraryApp.Interfaces;
 using LibraryApp.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryApp.Controllers
 {
@@ -139,6 +140,47 @@ namespace LibraryApp.Controllers
         public async Task<List<string>> ChicagoCitation()
         {
             return await _libraryRepository.ChicagoCitation();
+        }
+
+        /// <summary>
+        ///     Save list of book to the database.
+        /// </summary>
+        /// <param name="books"></param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     {
+        ///         "publisher": "string",
+        ///         "title": "string",
+        ///         "authorLastName": "string",
+        ///         "authorFirstName": "string",
+        ///         "price": 0
+        ///      }
+        /// </remarks>
+        /// <response code="200">Save list of book to the database</response>
+        /// <response code="400">Invalid request parameters. Please check your input.</response> 
+        /// <response code="401">Unauthorized to access the resource.</response>
+        /// <response code="403">Access denied. You do not have the necessary permissions.</response>
+        /// <response code="500">An internal server error occurred.</response>
+        [HttpPost]
+        public async Task<SaveResponse> SaveListOfBooksToDb(List<Book> books)
+        {
+            try
+            {
+                return await _libraryRepository.SaveListOfBooksToDb(books);
+            }
+            catch (DbUpdateException ex)
+            {
+                string errors = ex.InnerException.Message;
+                if (errors.Contains("IX_Book_Title"))
+                {
+                    throw new DbUpdateException("Book Title already exists");
+                }
+                else
+                {
+                    throw new Exception(ex.Message);    
+                }
+            }
         }
     }
 }

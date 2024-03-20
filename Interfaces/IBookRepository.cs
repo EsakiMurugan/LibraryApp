@@ -1,5 +1,6 @@
 ﻿using LibraryApp.DTO;
 using LibraryApp.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Interfaces
 {
@@ -13,5 +14,6 @@ namespace LibraryApp.Interfaces
         Task<List<BookDTO>> SaveListOfBooksToDb();
         Task<List<string>> MLACitation();
         Task<List<string>> ChicagoCitation();
+        Task<SaveResponse> SaveListOfBooksToDb(List<Book> books);
     }
 }

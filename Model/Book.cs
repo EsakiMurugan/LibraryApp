@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryApp.Model
 {
+    [Index(nameof(Title), Name = "IX_Book_Title", IsUnique = true)]
     public class Book 
     {
         [Key]

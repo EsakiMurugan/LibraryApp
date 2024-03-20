@@ -22,3 +22,5 @@ Overview:
 	6). Created ResearchScholar and Thesis model to describe one to many relationship 
 		and database diagram is attached in the Images folder.
 	7). Added Property to the book class and returns MLA and Chicago citation output as a string.
+	8). Action method to save list of book to the database. The book list is passed from swagger as a parameter.
+	9). To avoid duplication entry creation in Title attribute made index as unique.

@@ -3,7 +3,9 @@ using LibraryApp.DAL;
 using LibraryApp.DTO;
 using LibraryApp.Interfaces;
 using LibraryApp.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace LibraryApp.Repository
 {
@@ -170,6 +172,13 @@ namespace LibraryApp.Repository
             {
                 throw new Exception($"{ex.Message}");
             }
+        }
+
+        public async Task<SaveResponse> SaveListOfBooksToDb(List<Book> books)
+        {
+            await _db.Book.AddRangeAsync(books);
+            await _db.SaveChangesAsync();
+            return new SaveResponse { Success = true, Message = "Book list saved successfully", StatusCode = 201 };
         }
     }
 }
